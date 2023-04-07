@@ -60,7 +60,7 @@ class DAILAController:
         self._api_key = data
         openai.api_key = self._api_key
 
-    def _ask_gpt(self, question: str, model="text-davinci-003", temperature=0.0, max_tokens=64, frequency_penalty=0,
+    def _ask_gpt(self, question: str, model="text-davinci-003", temperature=0.0, max_tokens=400, frequency_penalty=0,
                  presence_penalty=0):
         try:
             response = openai.Completion.create(
@@ -109,8 +109,6 @@ class DAILAController:
             f'{dec}'
             '"""'
             'Here is what the above source code is doing:\n',
-            model="code-davinci-002",
-            max_tokens=64
         )
 
         if response is None:
@@ -227,7 +225,7 @@ class DAILAController:
 
         try:
             var_map = json.loads(response)
-        except Exception:
+        except Exception as e:
             var_map = None
 
         update = False
